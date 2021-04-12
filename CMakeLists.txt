@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(dcj21 CXX C)
+project(rivals CXX C)
 
 set(CMAKE_CXX_STANDARD 17)
 
