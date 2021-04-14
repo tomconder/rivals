@@ -26,6 +26,8 @@ namespace move {
         RIGHT,
         FORWARD,
         BACK,
+        ROTATE_LEFT,
+        ROTATE_RIGHT,
         NONE
     };
 }

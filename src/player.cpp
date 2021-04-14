@@ -41,6 +41,36 @@ void Player::moveForward() {
     }
 }
 
+void Player::moveLeft() {
+    if (direction == direction::Direction::RIGHT) {
+        mapy--;
+    }
+    if (direction == direction::Direction::UP) {
+        mapx--;
+    }
+    if (direction == direction::Direction::LEFT) {
+        mapy++;
+    }
+    if (direction == direction::Direction::DOWN) {
+        mapx++;
+    }
+}
+
+void Player::moveRight() {
+    if (direction == direction::Direction::RIGHT) {
+        mapy++;
+    }
+    if (direction == direction::Direction::UP) {
+        mapx++;
+    }
+    if (direction == direction::Direction::LEFT) {
+        mapy--;
+    }
+    if (direction == direction::Direction::DOWN) {
+        mapx--;
+    }
+}
+
 void Player::rotateLeft() {
     if (direction == direction::Direction::RIGHT) {
         direction = direction::Direction::UP;
@@ -78,25 +108,31 @@ void Player::update(Uint32 elapsedTime) {
     timeElapsed += elapsedTime;
     if (timeElapsed >= timeToUpdate) {
         timeElapsed = (timeElapsed - timeToUpdate) % timeToUpdate;
+
         switch (nextMove) {
-        case move::Move::LEFT:
-            rotateLeft();
-            nextMove = move::Move::NONE;
-            break;
-        case move::Move::RIGHT:
-            rotateRight();
-            nextMove = move::Move::NONE;
+        case move::Move::BACK:
+            moveBackward();
             break;
         case move::Move::FORWARD:
             moveForward();
-            nextMove = move::Move::NONE;
             break;
-        case move::Move::BACK:
-            moveBackward();
-            nextMove = move::Move::NONE;
+        case move::Move::LEFT:
+            moveLeft();
             break;
-        default:break;
+        case move::Move::RIGHT:
+            moveRight();
+            break;
+        case move::Move::ROTATE_LEFT:
+            rotateLeft();
+            break;
+        case move::Move::ROTATE_RIGHT:
+            rotateRight();
+            break;
+        default:
+            break;
         }
+
+        nextMove = move::Move::NONE;
     }
 }
 
