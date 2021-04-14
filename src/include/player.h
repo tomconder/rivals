@@ -13,6 +13,8 @@ public:
     void setNextMove(move::Move move);
     void moveBackward();
     void moveForward();
+    void moveLeft();
+    void moveRight();
     void rotateLeft();
     void rotateRight();
     void stopMoving();

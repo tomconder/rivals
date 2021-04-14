@@ -34,8 +34,7 @@ bool DungeonCrawler::onUserUpdate(Uint32 elapsedTime) {
         return false;
     }
 
-    if (
-        input.wasKeyPressed(SDL_SCANCODE_A) || input.wasKeyPressed(SDL_SCANCODE_LEFT)) {
+    if (input.wasKeyPressed(SDL_SCANCODE_A) || input.wasKeyPressed(SDL_SCANCODE_LEFT)) {
         player->setNextMove(move::Move::LEFT);
     }
     if (input.wasKeyPressed(SDL_SCANCODE_D) || input.wasKeyPressed(SDL_SCANCODE_RIGHT)) {
@@ -47,11 +46,19 @@ bool DungeonCrawler::onUserUpdate(Uint32 elapsedTime) {
     if (input.wasKeyPressed(SDL_SCANCODE_S) || input.wasKeyPressed(SDL_SCANCODE_DOWN)) {
         player->setNextMove(move::Move::BACK);
     }
+    if (input.wasKeyPressed(SDL_SCANCODE_Q)) {
+        player->setNextMove(move::Move::ROTATE_LEFT);
+    }
+    if (input.wasKeyPressed(SDL_SCANCODE_E)) {
+        player->setNextMove(move::Move::ROTATE_RIGHT);
+    }
 
     if (input.wasKeyReleased(SDL_SCANCODE_A) ||
         input.wasKeyReleased(SDL_SCANCODE_D) ||
         input.wasKeyReleased(SDL_SCANCODE_S) ||
         input.wasKeyReleased(SDL_SCANCODE_W) ||
+        input.wasKeyReleased(SDL_SCANCODE_Q) ||
+        input.wasKeyReleased(SDL_SCANCODE_E) ||
         input.wasKeyReleased(SDL_SCANCODE_LEFT) ||
         input.wasKeyReleased(SDL_SCANCODE_RIGHT) ||
         input.wasKeyReleased(SDL_SCANCODE_UP) ||
