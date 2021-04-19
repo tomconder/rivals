@@ -110,26 +110,25 @@ void Player::update(Uint32 elapsedTime) {
         timeElapsed = (timeElapsed - timeToUpdate) % timeToUpdate;
 
         switch (nextMove) {
-        case move::Move::BACK:
-            moveBackward();
-            break;
-        case move::Move::FORWARD:
-            moveForward();
-            break;
-        case move::Move::LEFT:
-            moveLeft();
-            break;
-        case move::Move::RIGHT:
-            moveRight();
-            break;
-        case move::Move::ROTATE_LEFT:
-            rotateLeft();
-            break;
-        case move::Move::ROTATE_RIGHT:
-            rotateRight();
-            break;
-        default:
-            break;
+            case move::Move::BACK:
+                moveBackward();
+                break;
+            case move::Move::FORWARD:
+                moveForward();
+                break;
+            case move::Move::LEFT:
+                moveLeft();
+                break;
+            case move::Move::RIGHT:
+                moveRight();
+                break;
+            case move::Move::ROTATE_LEFT:
+                rotateLeft();
+                break;
+            case move::Move::ROTATE_RIGHT:
+                rotateRight();
+                break;
+            default:break;
         }
 
         nextMove = move::Move::NONE;

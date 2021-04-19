@@ -30,7 +30,7 @@ Warrior::Warrior(Graphics &graphics) : Enemy(graphics,
                                              400,
                                              120,
                                              120) {
-  // nothing
+    // nothing
 }
 
 void Warrior::update(Uint32 elapsedTime) {
@@ -59,7 +59,7 @@ Goblin::Goblin(Graphics &graphics) : Enemy(graphics,
                                            500,
                                            158,
                                            120) {
-  // nothing
+    // nothing
 }
 
 void Goblin::update(Uint32 elapsedTime) {

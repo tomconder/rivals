@@ -9,13 +9,13 @@ Map::Map(Graphics &graphics, Level *level, int posx, int posy) :
     height = level->getHeight();
 
     arrow = new MapCursor(graphics,
-                   "assets/images/cursor.png",
-                   0,
-                   0,
-                   10,
-                   10,
-                   0,
-                   0
+                          "assets/images/cursor.png",
+                          0,
+                          0,
+                          10,
+                          10,
+                          0,
+                          0
     );
     arrow->setupFrames();
 
@@ -70,7 +70,7 @@ void Map::drawBorders(SDL_Renderer *renderer) {
 void Map::drawPlayer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 0xf8, 0xd7, 0xda, 0xff);
 
-    SDL_Rect rect = { playerx * cellSize, playery * cellSize, cellSize - 1, cellSize - 1};
+    SDL_Rect rect = {playerx * cellSize, playery * cellSize, cellSize - 1, cellSize - 1};
     SDL_RenderFillRect(renderer, &rect);
 }
 
