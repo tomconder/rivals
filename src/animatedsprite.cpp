@@ -88,7 +88,6 @@ void AnimatedSprite::resetAnimations() {
 
 void AnimatedSprite::stopAnimation() {
     frameIndex = 0;
-    animationDone(currentAnimation);
 }
 
 void AnimatedSprite::setVisible(bool visible) {
@@ -96,8 +95,4 @@ void AnimatedSprite::setVisible(bool visible) {
 }
 
 void AnimatedSprite::setupAnimations() {
-}
-
-void AnimatedSprite::animationDone(const std::string &currentAnimation) {
-    // nothing yet
 }

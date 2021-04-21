@@ -25,7 +25,6 @@ public:
     void update(Uint32 elapsedTime) override;
     void draw(Graphics &graphics) override;
 
-    void animationDone(const std::string &currentAnimation) override;
     void setupAnimations() override;
 };
 
@@ -35,7 +34,6 @@ public:
     void update(Uint32 elapsedTime) override;
     void draw(Graphics &graphics) override;
 
-    void animationDone(const std::string &currentAnimation) override;
     void setupAnimations() override;
 };
 

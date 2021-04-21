@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="12" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="3">
+ <editorsettings>
+  <export target="e1m1.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" source="maptiles.tsx"/>
+ <layer id="1" name="tiles" width="12" height="10">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,1,1,1,2,1,
+1,0,0,1,1,0,0,1,0,0,0,1,
+1,0,0,0,1,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,1,2,1,
+1,1,0,0,0,0,0,1,0,1,0,1,
+1,1,0,0,0,0,1,1,0,1,0,1,
+1,0,0,0,0,0,2,0,0,0,0,1,
+1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup color="#00aaff" id="2" name="player">
+  <object id="1" name="start" x="170" y="175" width="10" height="10">
+   <properties>
+    <property name="direction" type="int" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

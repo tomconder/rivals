@@ -14,7 +14,7 @@ bool DungeonCrawler::onUserCreate() {
                       globals::SCREEN_WIDTH - 80,
                       globals::SCREEN_HEIGHT - 80);
 
-    level = new Level(10, 40, 4, 5, direction::Direction::UP);
+    level = new Level("assets/maps/e1m1.json");
 
     map = new Map(graphics, level, 10, 10);
 
@@ -67,15 +67,10 @@ bool DungeonCrawler::onUserUpdate(Uint32 elapsedTime) {
         player->stopMoving();
     }
 
-    map->update(elapsedTime, graphics);
+    map->update(elapsedTime, graphics, level, player);
     warrior->update(elapsedTime);
     goblin->update(elapsedTime);
-    player->update(elapsedTime);
-
-    int minx, maxx, miny, maxy;
-    map->getBounds(minx, maxx, miny, maxy);
-    player->handleOutOfBounds(minx, maxx, miny, maxy);
-    map->updatePlayer(player->getMapX(), player->getMapY(), player->getDirection());
+    player->update(elapsedTime, level);
 
     map->draw(graphics);
     warrior->draw(graphics);

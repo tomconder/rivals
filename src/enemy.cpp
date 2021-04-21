@@ -46,10 +46,6 @@ void Warrior::setupAnimations() {
     playAnimation("Idle");
 }
 
-void Warrior::animationDone(const std::string &currentAnimation) {
-    // nothing
-}
-
 Goblin::Goblin(Graphics &graphics) : Enemy(graphics,
                                            "assets/sprites/02-Meele Goblin/Idle (64x64).png",
                                            0,
@@ -73,8 +69,4 @@ void Goblin::draw(Graphics &graphics) {
 void Goblin::setupAnimations() {
     addAnimation(11, 0, 0, "Idle", 64, 64, std::pair<int, int>(0, 0));
     playAnimation("Idle");
-}
-
-void Goblin::animationDone(const std::string &currentAnimation) {
-    // nothing
 }
