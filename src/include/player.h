@@ -1,38 +1,38 @@
 #ifndef INCLUDE_PLAYER_H
 #define INCLUDE_PLAYER_H
 
+#include <SDL.h>
 #include "globals.h"
 #include "level.h"
-#include <utility>
-#include <SDL.h>
 
 class Player {
 public:
-    Player(Level *level);
+    explicit Player(Level *level);
 
     void setNextMove(move::Move move);
-    void moveBackward();
-    void moveForward();
-    void moveLeft();
-    void moveRight();
+    void moveBackward(Level *level);
+    void moveForward(Level *level);
+    void moveLeft(Level *level);
+    void moveRight(Level *level);
     void rotateLeft();
     void rotateRight();
     void stopMoving();
 
-    void handleOutOfBounds(int minx, int maxx, int miny, int maxy);
-    void update(Uint32 elapsedTime);
+    void update(Uint32 elapsedTime, Level *level);
 
-    direction::Direction getDirection();
-    int getMapX();
-    int getMapY();
+    direction::Direction getDirection() const;
+    int getX() const;
+    int getY() const;
 
 private:
-    Uint32 timeElapsed;
+    Uint32 timeElapsed = 0;
     Uint32 timeToUpdate;
-    move::Move nextMove;
+    move::Move nextMove = move::Move::NONE;
 
-    int mapx, mapy;
+    int x, y;
     direction::Direction direction;
+
+    bool checkDestination(int destx, int desty, Level *level);
 };
 
 #endif //INCLUDE_PLAYER_H

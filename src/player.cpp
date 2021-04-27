@@ -1,73 +1,119 @@
 #include <algorithm>
 #include "player.h"
 
-Player::Player(Level *level) : nextMove(move::Move::NONE), timeToUpdate(128) {
-    mapx = level->getSpawnPlayerX();
-    mapy = level->getSpawnPlayerY();
+Player::Player(Level *level) : timeToUpdate(128) {
+    x = level->getSpawnPlayerX();
+    y = level->getSpawnPlayerY();
     direction = level->getSpawnPlayerDirection();
+    nextMove = move::Move::NONE;
 }
 
 void Player::setNextMove(move::Move move) {
     nextMove = move;
 }
 
-void Player::moveBackward() {
+bool Player::checkDestination(int destx, int desty, Level *level) {
+    if (destx != std::clamp(destx, 0, level->getWidth() - 1)) {
+        return false;
+    }
+
+    if (desty != std::clamp(desty, 0, level->getHeight() - 1)) {
+        return false;
+    }
+
+    std::vector<double> values = level->getValues();
+    return values[destx + desty * level->getWidth()] != 1;
+}
+
+void Player::moveBackward(Level *level) {
     if (direction == direction::Direction::RIGHT) {
-        mapx--;
+        if (checkDestination(x - 1, y, level)) {
+            x--;
+        }
     }
     if (direction == direction::Direction::UP) {
-        mapy++;
+        if (checkDestination(x, y + 1, level)) {
+            y++;
+        }
     }
     if (direction == direction::Direction::LEFT) {
-        mapx++;
+        if (checkDestination(x + 1, y, level)) {
+            x++;
+        }
     }
     if (direction == direction::Direction::DOWN) {
-        mapy--;
+        if (checkDestination(x, y - 1, level)) {
+            y--;
+        }
     }
 }
 
-void Player::moveForward() {
+void Player::moveForward(Level *level) {
     if (direction == direction::Direction::RIGHT) {
-        mapx++;
+        if (checkDestination(x + 1, y, level)) {
+            x++;
+        }
     }
     if (direction == direction::Direction::UP) {
-        mapy--;
+        if (checkDestination(x, y - 1, level)) {
+            y--;
+        }
     }
     if (direction == direction::Direction::LEFT) {
-        mapx--;
+        if (checkDestination(x - 1, y, level)) {
+            x--;
+        }
     }
     if (direction == direction::Direction::DOWN) {
-        mapy++;
+        if (checkDestination(x, y + 1, level)) {
+            y++;
+        }
     }
 }
 
-void Player::moveLeft() {
+void Player::moveLeft(Level *level) {
     if (direction == direction::Direction::RIGHT) {
-        mapy--;
+        if (checkDestination(x, y - 1, level)) {
+            y--;
+        }
     }
     if (direction == direction::Direction::UP) {
-        mapx--;
+        if (checkDestination(x - 1, y, level)) {
+            x--;
+        }
     }
     if (direction == direction::Direction::LEFT) {
-        mapy++;
+        if (checkDestination(x, y + 1, level)) {
+            y++;
+        }
     }
     if (direction == direction::Direction::DOWN) {
-        mapx++;
+        if (checkDestination(x + 1, y, level)) {
+            x++;
+        }
     }
 }
 
-void Player::moveRight() {
+void Player::moveRight(Level *level) {
     if (direction == direction::Direction::RIGHT) {
-        mapy++;
+        if (checkDestination(x, y + 1, level)) {
+            y++;
+        }
     }
     if (direction == direction::Direction::UP) {
-        mapx++;
+        if (checkDestination(x + 1, y, level)) {
+            x++;
+        }
     }
     if (direction == direction::Direction::LEFT) {
-        mapy--;
+        if (checkDestination(x, y - 1, level)) {
+            y--;
+        }
     }
     if (direction == direction::Direction::DOWN) {
-        mapx--;
+        if (checkDestination(x - 1, y, level)) {
+            x--;
+        }
     }
 }
 
@@ -99,28 +145,23 @@ void Player::stopMoving() {
     nextMove = move::Move::NONE;
 }
 
-void Player::handleOutOfBounds(int minx, int maxx, int miny, int maxy) {
-    mapx = std::clamp(mapx, minx, maxx);
-    mapy = std::clamp(mapy, miny, maxy);
-}
-
-void Player::update(Uint32 elapsedTime) {
+void Player::update(Uint32 elapsedTime, Level *level) {
     timeElapsed += elapsedTime;
     if (timeElapsed >= timeToUpdate) {
         timeElapsed = (timeElapsed - timeToUpdate) % timeToUpdate;
 
         switch (nextMove) {
             case move::Move::BACK:
-                moveBackward();
+                moveBackward(level);
                 break;
             case move::Move::FORWARD:
-                moveForward();
+                moveForward(level);
                 break;
             case move::Move::LEFT:
-                moveLeft();
+                moveLeft(level);
                 break;
             case move::Move::RIGHT:
-                moveRight();
+                moveRight(level);
                 break;
             case move::Move::ROTATE_LEFT:
                 rotateLeft();
@@ -135,14 +176,14 @@ void Player::update(Uint32 elapsedTime) {
     }
 }
 
-direction::Direction Player::getDirection() {
+direction::Direction Player::getDirection() const {
     return direction;
 }
 
-int Player::getMapX() {
-    return mapx;
+int Player::getX() const {
+    return x;
 }
 
-int Player::getMapY() {
-    return mapy;
+int Player::getY() const {
+    return y;
 }

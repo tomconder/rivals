@@ -1,0 +1,15 @@
+{
+  "columns": 2,
+  "image": "..\/images\/maptiles.png",
+  "imageheight": 32,
+  "imagewidth": 64,
+  "margin": 0,
+  "name": "maptiles",
+  "spacing": 0,
+  "tilecount": 2,
+  "tiledversion": "1.5.0",
+  "tileheight": 32,
+  "tilewidth": 32,
+  "type": "tileset",
+  "version": 1.5
+}

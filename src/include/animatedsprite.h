@@ -39,7 +39,6 @@ protected:
     void stopAnimation();
     void setVisible(bool visible);
 
-    virtual void animationDone(const std::string &urrentAnimation) = 0;
     virtual void setupAnimations() = 0;
 
 private:
