@@ -38,7 +38,7 @@ file(
         assets/*)
 
 find_package(SDL2 CONFIG REQUIRED)
-find_package(SDL2_IMAGE CONFIG REQUIRED)
+find_package(Stb REQUIRED)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/rivals)
 
@@ -66,9 +66,9 @@ if (MSVC)
 endif ()
 
 target_include_directories(rivals PUBLIC src/include)
+target_include_directories(rivals SYSTEM PRIVATE ${Stb_INCLUDE_DIR})
 
 target_link_libraries(rivals PRIVATE $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main> $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>)
-target_link_libraries(rivals PRIVATE $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>)
 
 if (APPLE)
   add_custom_command(
@@ -89,9 +89,6 @@ if (APPLE)
         fixup_bundle(\"${APPS}\" \"${LIBS}\" \"${DIRS}\"\)"
           COMPONENT Runtime
   )
-
-    set(CPACK_GENERATOR "DRAGNDROP")
-    include(CPack)
 else ()
   add_custom_command(
           TARGET rivals

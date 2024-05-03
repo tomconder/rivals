@@ -11,28 +11,6 @@ project(rivals
         HOMEPAGE_URL "https://gitub.com/tomconder/rivals"
         LANGUAGES C CXX)
 
-if (WIN32)
-  # accommodate missing version number values
-  string(APPEND VERSION ${PROJECT_VERSION_MAJOR})
-  if (PROJECT_VERSION_MINOR)
-    string(APPEND VERSION ",${PROJECT_VERSION_MINOR}")
-  else ()
-    string(APPEND VERSION ",0")
-  endif ()
-  if (PROJECT_VERSION_PATCH)
-    string(APPEND VERSION ",${PROJECT_VERSION_PATCH}")
-  else ()
-    string(APPEND VERSION ",0")
-  endif ()
-  if (PROJECT_VERSION_TWEAK)
-    string(APPEND VERSION ",${PROJECT_VERSION_TWEAK}")
-  else ()
-    string(APPEND VERSION ",0")
-  endif ()
-
-  configure_file(bundle/resources/rivals.rc.in rivals.rc)
-endif ()
-
 set(COPYRIGHT "Copyright 2024 Tom Conder")
 
 message(STATUS "Configuring ${PROJECT_NAME} ${PROJECT_VERSION}")

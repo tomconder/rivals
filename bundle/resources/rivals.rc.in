@@ -1,16 +1,17 @@
 #include "winver.h"
 
-#ifndef MazeIcon
-#define MazeIcon 1
+#ifndef RivalsIcon
+#define RivalsIcon 1
 #endif
 
 #define ICO "rivals.ico"
 
-MazeIcon ICON DISCARDABLE ICO
+RivalsIcon ICON DISCARDABLE ICO
 
 #define EXE                 "${CMAKE_PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}"
 #define NAME                "${CMAKE_PROJECT_NAME}"
 #define DESCRIPTION         NAME
+#define HOMEPAGE            "@rivals_HOMEPAGE_URL@"
 #define LICENSE             "MIT License"
 #define COPYRIGHT           "${COPYRIGHT}"
 #define VERSION_INFO        ${VERSION}
@@ -27,6 +28,7 @@ BEGIN
         BEGIN
             VALUE "FileDescription",    DESCRIPTION
             VALUE "FileVersion",        VERSION_INFO
+            VALUE "Homepage",           HOMEPAGE
             VALUE "InternalName",       NAME
             VALUE "LegalCopyright",     COPYRIGHT
             VALUE "License",            LICENSE

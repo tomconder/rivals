@@ -1,6 +1,9 @@
 #include <SDL.h>
-#include <SDL_image.h>
 #include "graphics.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 
 void Graphics::blitSurface(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *dstrect) {
     SDL_RenderCopy(renderer, texture, srcrect, dstrect);
@@ -29,9 +32,33 @@ void Graphics::flip() {
 }
 
 SDL_Surface *Graphics::loadImage(const std::string &file) {
+    int origFormat;
+    constexpr int depth = 32;
+    int height;
+    int width;
+    constexpr int channels = STBI_rgb_alpha;
+
+    auto data = stbi_load(file.c_str(), &width, &height, &origFormat, channels);
+
     if (images.count(file) == 0) {
-        images[file] = IMG_Load(file.c_str());
+
+        #if SDL_BYTEORDER == SDL_LIL_ENDIAN
+    constexpr uint32_t rmask = 0x000000FF;
+    constexpr uint32_t gmask = 0x0000FF00;
+    constexpr uint32_t bmask = 0x00FF0000;
+    constexpr uint32_t amask = 0xFF000000;
+#else
+    constexpr uint32_t rmask = 0xFF000000;
+    constexpr uint32_t gmask = 0x00FF0000;
+    constexpr uint32_t bmask = 0x0000FF00;
+    constexpr uint32_t amask = 0x000000FF;
+#endif
+
+    images[file] =
+        SDL_CreateRGBSurfaceFrom(data, width, height, depth, channels * width,
+                                 rmask, gmask, bmask, amask);
     }
+
     return images[file];
 }
 

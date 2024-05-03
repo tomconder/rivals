@@ -1,11 +1,24 @@
 root = true
 
-[*]
-indent_style = space
-indent_size = 2
+[CMakeLists.*]
 charset = utf-8
-trim_trailing_whitespace = true
+indent_size = 4
+indent_style = space
+
+[*.{h,hpp,c,cpp,vert,geom,frag}]
+charset = utf-8
+end_of_line = crlf
+indent_size = 2
+indent_style = space
 insert_final_newline = true
+trim_trailing_whitespace = true
 
 [*.md]
-trim_trailing_whitespace = false
+charset = utf-8
+indent_size = 2
+indent_style = space
+trim_trailing_whitespace = true
+
+[*.txt]
+charset = utf-8
+end_of_line = crlf
