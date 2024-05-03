@@ -67,7 +67,13 @@ file(
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_IMAGE CONFIG REQUIRED)
 
-add_executable(rivals ${SOURCE_FILES} ${HEADER_FILES})
+if (WIN32)
+  add_executable(rivals WIN32 ${SOURCE_FILES} ${HEADER_FILES})
+elseif (APPLE)
+  add_executable(rivals MACOSX_BUNDLE ${SOURCE_FILES} ${HEADER_FILES})
+else ()
+  add_executable(rivals ${SOURCE_FILES} ${HEADER_FILES})
+endif ()
 
 set_target_properties(rivals PROPERTIES CXX_STANDARD 23)
 
