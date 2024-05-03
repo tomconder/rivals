@@ -1,30 +1,18 @@
 #include "animatedsprite.hpp"
 
-AnimatedSprite::AnimatedSprite(Graphics &graphics,
-                               const std::string &file,
-                               int srcx,
-                               int srcy,
-                               int w,
-                               int h,
-                               int posx,
-                               int posy,
-                               Uint32 timeToUpdate) : Sprite(graphics,
-                                                             file,
-                                                             srcx,
-                                                             srcy,
-                                                             w,
-                                                             h,
-                                                             posx,
-                                                             posy),
-                                                      frameIndex(0),
-                                                      timeToUpdate(timeToUpdate),
-                                                      visible(true),
-                                                      currentAnimationOnce(false),
-                                                      currentAnimation("") {
+AnimatedSprite::AnimatedSprite(Graphics& graphics, const std::string& file,
+                               int srcx, int srcy, int w, int h, int posx,
+                               int posy, Uint32 timeToUpdate)
+    : Sprite(graphics, file, srcx, srcy, w, h, posx, posy),
+      frameIndex(0),
+      timeToUpdate(timeToUpdate),
+      visible(true),
+      currentAnimationOnce(false),
+      currentAnimation("") {
     // do nothing
 }
 
-void AnimatedSprite::playAnimation(const std::string &animation, bool once) {
+void AnimatedSprite::playAnimation(const std::string& animation, bool once) {
     currentAnimationOnce = once;
     if (currentAnimation != animation) {
         currentAnimation = animation;
@@ -49,7 +37,7 @@ void AnimatedSprite::update(Uint32 elapsedTime) {
     }
 }
 
-void AnimatedSprite::draw(Graphics &graphics) {
+void AnimatedSprite::draw(Graphics& graphics) {
     if (visible) {
         SDL_Rect dstrect;
 
@@ -63,21 +51,18 @@ void AnimatedSprite::draw(Graphics &graphics) {
     }
 }
 
-void AnimatedSprite::addAnimation(int frames,
-                                  int x,
-                                  int y,
-                                  const std::string &name,
-                                  int width,
-                                  int height,
-                                  std::pair<int, int> offset) {
+void AnimatedSprite::addAnimation(int frames, int x, int y,
+                                  const std::string& name, int width,
+                                  int height, std::pair<int, int> offset) {
     std::vector<SDL_Rect> rects;
 
     for (int i = 0; i < frames; i++) {
-        SDL_Rect rect = {(i + x) * width, y, width, height};
+        SDL_Rect rect = { (i + x) * width, y, width, height };
         rects.push_back(rect);
     }
 
-    animations.insert(std::pair<std::string, std::vector<SDL_Rect>>(name, rects));
+    animations.insert(
+        std::pair<std::string, std::vector<SDL_Rect>>(name, rects));
     offsets.insert(std::pair<std::string, std::pair<int, int>>(name, offset));
 }
 
@@ -94,5 +79,4 @@ void AnimatedSprite::setVisible(bool visible) {
     this->visible = visible;
 }
 
-void AnimatedSprite::setupAnimations() {
-}
+void AnimatedSprite::setupAnimations() {}

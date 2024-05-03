@@ -1,20 +1,16 @@
 #include "dungeoncrawler.hpp"
+#include "file.hpp"
 
 DungeonCrawler::DungeonCrawler() {
     appName = "Executive Rivals";
 }
 
 bool DungeonCrawler::onUserCreate() {
-    logo = new Sprite(graphics,
-                      "assets/images/coffee.png",
-                      0,
-                      0,
-                      64,
-                      64,
-                      globals::SCREEN_WIDTH - 80,
-                      globals::SCREEN_HEIGHT - 80);
+    logo =
+        new Sprite(graphics, sponge::File::getResourceDir() + "/images/coffee.png", 0, 0, 64, 64,
+                   globals::SCREEN_WIDTH - 80, globals::SCREEN_HEIGHT - 80);
 
-    level = new Level("assets/maps/e1m1.json");
+    level = new Level(sponge::File::getResourceDir() + "/maps/e1m1.json");
 
     map = new Map(graphics, level, 10, 10);
 
@@ -34,16 +30,20 @@ bool DungeonCrawler::onUserUpdate(Uint32 elapsedTime) {
         return false;
     }
 
-    if (input.wasKeyPressed(SDL_SCANCODE_A) || input.wasKeyPressed(SDL_SCANCODE_LEFT)) {
+    if (input.wasKeyPressed(SDL_SCANCODE_A) ||
+        input.wasKeyPressed(SDL_SCANCODE_LEFT)) {
         player->setNextMove(move::Move::LEFT);
     }
-    if (input.wasKeyPressed(SDL_SCANCODE_D) || input.wasKeyPressed(SDL_SCANCODE_RIGHT)) {
+    if (input.wasKeyPressed(SDL_SCANCODE_D) ||
+        input.wasKeyPressed(SDL_SCANCODE_RIGHT)) {
         player->setNextMove(move::Move::RIGHT);
     }
-    if (input.wasKeyPressed(SDL_SCANCODE_W) || input.wasKeyPressed(SDL_SCANCODE_UP)) {
+    if (input.wasKeyPressed(SDL_SCANCODE_W) ||
+        input.wasKeyPressed(SDL_SCANCODE_UP)) {
         player->setNextMove(move::Move::FORWARD);
     }
-    if (input.wasKeyPressed(SDL_SCANCODE_S) || input.wasKeyPressed(SDL_SCANCODE_DOWN)) {
+    if (input.wasKeyPressed(SDL_SCANCODE_S) ||
+        input.wasKeyPressed(SDL_SCANCODE_DOWN)) {
         player->setNextMove(move::Move::BACK);
     }
     if (input.wasKeyPressed(SDL_SCANCODE_Q)) {
@@ -62,8 +62,7 @@ bool DungeonCrawler::onUserUpdate(Uint32 elapsedTime) {
         input.wasKeyReleased(SDL_SCANCODE_LEFT) ||
         input.wasKeyReleased(SDL_SCANCODE_RIGHT) ||
         input.wasKeyReleased(SDL_SCANCODE_UP) ||
-        input.wasKeyReleased(SDL_SCANCODE_DOWN)
-        ) {
+        input.wasKeyReleased(SDL_SCANCODE_DOWN)) {
         player->stopMoving();
     }
 

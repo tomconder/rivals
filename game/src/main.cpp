@@ -1,14 +1,14 @@
+#include "dungeoncrawler.hpp"
+#include "globals.hpp"
 #include <SDL.h>
 
-#include "globals.hpp"
-#include "dungeoncrawler.hpp"
+DungeonCrawler* dungeonCrawler;
 
-DungeonCrawler *dungeonCrawler;
-
-int main(int argc, char *args[]) {
+int main(int argc, char* args[]) {
     dungeonCrawler = new DungeonCrawler();
 
-    if (dungeonCrawler->construct(globals::SCREEN_WIDTH, globals::SCREEN_HEIGHT)) {
+    if (dungeonCrawler->construct(globals::SCREEN_WIDTH,
+                                  globals::SCREEN_HEIGHT)) {
         dungeonCrawler->start();
     }
 

@@ -6,24 +6,24 @@
 #include <string>
 
 class Graphics {
-public:
-    void blitSurface(SDL_Texture *source, SDL_Rect *srcrect, SDL_Rect *dstrect);
+   public:
+    void blitSurface(SDL_Texture* source, SDL_Rect* srcrect, SDL_Rect* dstrect);
     void cleanup();
     void clear();
     void create(int w, int h);
     void flip();
 
-    SDL_Surface *loadImage(const std::string &file);
-    SDL_Renderer *getRenderer() const;
-    SDL_Window *getWindow() const;
+    SDL_Surface* loadImage(const std::string& file);
+    SDL_Renderer* getRenderer() const;
+    SDL_Window* getWindow() const;
 
-    void setWindowTitle(const std::string &title);
+    void setWindowTitle(const std::string& title);
 
-private:
-    SDL_Window *window;
-    SDL_Renderer *renderer;
+   private:
+    SDL_Window* window;
+    SDL_Renderer* renderer;
 
-    std::map<std::string, SDL_Surface *> images;
+    std::map<std::string, SDL_Surface*> images;
 };
 
-#endif //INCLUDE_GRAPHICS_H
+#endif  // INCLUDE_GRAPHICS_H

@@ -1,24 +1,25 @@
 #ifndef INCLUDE_SPRITE_H
 #define INCLUDE_SPRITE_H
 
+#include "graphics.hpp"
 #include <SDL.h>
 #include <string>
-#include "graphics.hpp"
 
 class Sprite {
-public:
-    Sprite(Graphics &graphics, int x, int y);
-    Sprite(Graphics &graphics, const std::string &file, int srcx, int srcy, int w, int h, int posx, int posy);
+   public:
+    Sprite(Graphics& graphics, int x, int y);
+    Sprite(Graphics& graphics, const std::string& file, int srcx, int srcy,
+           int w, int h, int posx, int posy);
 
     void cleanup();
     virtual void update(Uint32 elapsedTime);
-    virtual void draw(Graphics &graphics);
+    virtual void draw(Graphics& graphics);
 
-protected:
+   protected:
     SDL_Rect srcrect;
-    SDL_Texture *image;
+    SDL_Texture* image;
 
     int x, y;
 };
 
-#endif //INCLUDE_SPRITE_H
+#endif  // INCLUDE_SPRITE_H

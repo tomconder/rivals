@@ -1,7 +1,6 @@
+#include "engine.hpp"
 #include <SDL.h>
 #include <iostream>
-
-#include "engine.hpp"
 
 Engine::Engine() {
     appName = "undefined";
@@ -24,7 +23,8 @@ globals::retcode Engine::construct(int w, int h) {
 
 globals::retcode Engine::start() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) < 0) {
-        std::cout << "Unable to initialize SDL: " << SDL_GetError() << std::endl;
+        std::cout << "Unable to initialize SDL: " << SDL_GetError()
+                  << std::endl;
         return globals::FAIL;
     }
 
