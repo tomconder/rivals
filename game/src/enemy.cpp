@@ -39,10 +39,10 @@ void Warrior::setupAnimations() {
 }
 
 Goblin::Goblin(Graphics& graphics)
-    : Enemy(graphics,
-            File::getResourceDir() +
-                "/sprites/02-Meele Goblin/Idle (64x64).png",
-            0, 0, 64, 64, 500, 158, 120) {
+    : Enemy(
+          graphics,
+          File::getResourceDir() + "/sprites/02-Meele Goblin/Idle (64x64).png",
+          0, 0, 64, 64, 500, 158, 120) {
     // nothing
 }
 

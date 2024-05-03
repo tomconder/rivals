@@ -11,9 +11,9 @@ Map::Map(Graphics& graphics, Level* level, int posx, int posy)
     texWidth = level->getWidth() * cellSize;
     texHeight = level->getHeight() * cellSize;
 
-    arrow = new MapCursor(graphics,
-                          File::getResourceDir() + "/images/cursor.png",
-                          0, 0, 10, 10, 0, 0);
+    arrow =
+        new MapCursor(graphics, File::getResourceDir() + "/images/cursor.png",
+                      0, 0, 10, 10, 0, 0);
     arrow->setupFrames();
 
     image = SDL_CreateTexture(graphics.getRenderer(), SDL_PIXELFORMAT_RGBA32,

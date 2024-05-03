@@ -23,4 +23,3 @@ std::string File::getResourceDir() {
 
     return result;
 }
-
