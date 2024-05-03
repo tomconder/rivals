@@ -3,8 +3,6 @@
 #include <glob.h>
 #include <sysdir.h>
 
-namespace sponge {
-
 std::string OSXFile::expandTilde(const char* str) {
     glob_t globbuf;
     if (glob(str, GLOB_TILDE, nullptr, &globbuf) == 0) {
@@ -43,5 +41,3 @@ std::string OSXFile::getLogDir(const std::string& app) {
 
     throw std::runtime_error("Failed to get settings folder");
 }
-
-}  // namespace sponge

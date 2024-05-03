@@ -2,15 +2,11 @@
 
 #include <string>
 
-namespace sponge {
-
 class File {
    public:
     static std::string getLogDir(const std::string& app);
     static std::string getResourceDir();
 };
-
-}  // namespace sponge
 
 #ifdef __APPLE__
 #include "platform/osx/osxfile.hpp"

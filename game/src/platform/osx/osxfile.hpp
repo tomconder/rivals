@@ -2,8 +2,6 @@
 
 #include <string>
 
-namespace sponge {
-
 class OSXFile {
    public:
     static std::string getLogDir(const std::string& app);
@@ -12,5 +10,3 @@ class OSXFile {
    private:
     static std::string expandTilde(const char* str);
 };
-
-}  // namespace sponge

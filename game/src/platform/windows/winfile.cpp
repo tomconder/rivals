@@ -1,8 +1,6 @@
 #include "winfile.hpp"
 #include <filesystem>
 
-namespace sponge {
-
 std::string WinFile::getLogDir(const std::string& app) {
     char* appdata = nullptr;
     size_t sz = 0;
@@ -13,5 +11,3 @@ std::string WinFile::getLogDir(const std::string& app) {
 
     throw std::runtime_error("Failed to get appdata folder");
 }
-
-}  // namespace sponge

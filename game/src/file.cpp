@@ -1,7 +1,5 @@
 #include "file.hpp"
 
-namespace sponge {
-
 std::string File::getLogDir(const std::string& app) {
     std::string result = {};
 
@@ -26,4 +24,3 @@ std::string File::getResourceDir() {
     return result;
 }
 
-}  // namespace sponge

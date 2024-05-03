@@ -6,11 +6,11 @@ DungeonCrawler::DungeonCrawler() {
 }
 
 bool DungeonCrawler::onUserCreate() {
-    logo =
-        new Sprite(graphics, sponge::File::getResourceDir() + "/images/coffee.png", 0, 0, 64, 64,
-                   globals::SCREEN_WIDTH - 80, globals::SCREEN_HEIGHT - 80);
+    logo = new Sprite(
+        graphics, File::getResourceDir() + "/images/coffee.png", 0, 0,
+        64, 64, globals::SCREEN_WIDTH - 80, globals::SCREEN_HEIGHT - 80);
 
-    level = new Level(sponge::File::getResourceDir() + "/maps/e1m1.json");
+    level = new Level(File::getResourceDir() + "/maps/e1m1.json");
 
     map = new Map(graphics, level, 10, 10);
 

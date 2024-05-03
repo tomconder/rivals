@@ -18,8 +18,10 @@ void Enemy::draw(Graphics& graphics) {
 }
 
 Warrior::Warrior(Graphics& graphics)
-    : Enemy(graphics, sponge::File::getResourceDir() + "/sprites/01-Warrior/Normal/Idle (96x96).png", 0, 0,
-            96, 96, 400, 120, 120) {
+    : Enemy(graphics,
+            File::getResourceDir() +
+                "/sprites/01-Warrior/Normal/Idle (96x96).png",
+            0, 0, 96, 96, 400, 120, 120) {
     // nothing
 }
 
@@ -37,8 +39,10 @@ void Warrior::setupAnimations() {
 }
 
 Goblin::Goblin(Graphics& graphics)
-    : Enemy(graphics, sponge::File::getResourceDir() + "/sprites/02-Meele Goblin/Idle (64x64).png", 0, 0,
-            64, 64, 500, 158, 120) {
+    : Enemy(graphics,
+            File::getResourceDir() +
+                "/sprites/02-Meele Goblin/Idle (64x64).png",
+            0, 0, 64, 64, 500, 158, 120) {
     // nothing
 }
 
