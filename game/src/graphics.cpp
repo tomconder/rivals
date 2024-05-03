@@ -1,9 +1,10 @@
-#include <SDL.h>
 #include "graphics.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
+#include <SDL.h>
+#include <filesystem>
+#include <iostream>
 
 void Graphics::blitSurface(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *dstrect) {
     SDL_RenderCopy(renderer, texture, srcrect, dstrect);
@@ -38,11 +39,19 @@ SDL_Surface *Graphics::loadImage(const std::string &file) {
     int width;
     constexpr int channels = STBI_rgb_alpha;
 
-    auto data = stbi_load(file.c_str(), &width, &height, &origFormat, channels);
+    const std::filesystem::path name{ file };
+
+    void *data = stbi_load(name.string().data(), &width, &height, &origFormat, channels);
+
+    if (data == nullptr) {
+        // error loading image
+        std::cout << "loadImage failed: " << name.string().data() << std::endl;
+        return nullptr;
+    }
 
     if (images.count(file) == 0) {
 
-        #if SDL_BYTEORDER == SDL_LIL_ENDIAN
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
     constexpr uint32_t rmask = 0x000000FF;
     constexpr uint32_t gmask = 0x0000FF00;
     constexpr uint32_t bmask = 0x00FF0000;

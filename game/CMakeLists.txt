@@ -43,11 +43,21 @@ find_package(Stb REQUIRED)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/rivals)
 
 if (WIN32)
-  set_source_files_properties(maze.rc PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
+  set_source_files_properties(rivals.rc PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
   add_executable(rivals WIN32 ${SOURCE_FILES} ${HEADER_FILES} rivals.rc)
   target_include_directories(rivals PRIVATE bundle/icons)
 elseif (APPLE)
-  add_executable(rivals MACOSX_BUNDLE ${SOURCE_FILES} ${HEADER_FILES})
+  set(MACOSX_BUNDLE_ICON_FILE rivals.icns)
+  set(MACOSX_BUNDLE_BUNDLE_NAME ${CMAKE_PROJECT_NAME})
+  set(MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION})
+  set(MACOSX_BUNDLE_LONG_VERSION_STRING ${PROJECT_VERSION})
+  set(MACOSX_BUNDLE_COPYRIGHT ${COPYRIGHT})
+
+  set(app_icon_macos "bundle/icons/rivals.icns")
+  set_source_files_properties(
+          ${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources"
+          SKIP_PRECOMPILE_HEADERS ON)
+  add_executable(rivals MACOSX_BUNDLE ${SOURCE_FILES} ${HEADER_FILES} ${app_icon_macos})
 else ()
   add_executable(rivals ${SOURCE_FILES} ${HEADER_FILES})
 endif ()
@@ -79,7 +89,7 @@ if (APPLE)
           COMMENT "Copying assets to bundle content folder"
           VERBATIM DEPENDS ${ASSETS})
 
-  install(TARGETS game BUNDLE DESTINATION .)
+  install(TARGETS rivals BUNDLE DESTINATION .)
 
   set(APPS "$<TARGET_BUNDLE_DIR:rivals>")
 
