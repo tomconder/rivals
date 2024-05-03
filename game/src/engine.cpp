@@ -1,10 +1,7 @@
-#ifdef EMSCRIPTEN
-#include <emscripten/emscripten.h>
-#endif
 #include <SDL.h>
 #include <iostream>
 
-#include "engine.h"
+#include "engine.hpp"
 
 Engine::Engine() {
     appName = "undefined";
@@ -81,9 +78,6 @@ bool Engine::iterateLoop() {
 
     if (quit) {
         if (onUserDestroy()) {
-#ifdef EMSCRIPTEN
-            emscripten_cancel_main_loop();
-#endif
             graphics.cleanup();
             SDL_Quit();
 

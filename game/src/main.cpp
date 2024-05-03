@@ -1,17 +1,9 @@
-#ifdef EMSCRIPTEN
-#include <emscripten/emscripten.h>
-#endif
 #include <SDL.h>
 
-#include "globals.h"
-#include "dungeoncrawler.h"
+#include "globals.hpp"
+#include "dungeoncrawler.hpp"
 
 DungeonCrawler *dungeonCrawler;
-
-// loop iteration is broken out like this for emscripten
-bool iterateLoop() {
-    return dungeonCrawler->iterateLoop();
-}
 
 int main(int argc, char *args[]) {
     dungeonCrawler = new DungeonCrawler();
@@ -20,14 +12,10 @@ int main(int argc, char *args[]) {
         dungeonCrawler->start();
     }
 
-#ifdef EMSCRIPTEN
-    emscripten_set_main_loop((em_callback_func) iterateLoop, 60, true);
-#else
     bool quit = false;
     while (!quit) {
-        quit = iterateLoop();
+        quit = dungeonCrawler->iterateLoop();
     }
-#endif
 
     return 0;
 }

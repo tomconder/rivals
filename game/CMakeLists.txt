@@ -25,7 +25,7 @@ endif ()
 file(
         GLOB HEADER_FILES
         LIST_DIRECTORIES false
-        src/include/*.h)
+        src/*.hpp)
 
 file(
         GLOB SOURCE_FILES
@@ -75,7 +75,7 @@ if (MSVC)
   target_link_options(rivals PUBLIC "/NXCOMPAT /CETCOMPAT")
 endif ()
 
-target_include_directories(rivals PUBLIC src/include)
+target_include_directories(rivals PUBLIC src)
 target_include_directories(rivals SYSTEM PRIVATE ${Stb_INCLUDE_DIR})
 
 target_link_libraries(rivals PRIVATE $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main> $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>)

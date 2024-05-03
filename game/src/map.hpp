@@ -1,11 +1,11 @@
 #ifndef INCLUDE_MAP_H
 #define INCLUDE_MAP_H
 
-#include "globals.h"
-#include "level.h"
-#include "mapcursor.h"
-#include "player.h"
-#include "sprite.h"
+#include "globals.hpp"
+#include "level.hpp"
+#include "mapcursor.hpp"
+#include "player.hpp"
+#include "sprite.hpp"
 
 class Map : public Sprite {
 public:

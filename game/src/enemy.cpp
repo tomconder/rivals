@@ -1,4 +1,4 @@
-#include "enemy.h"
+#include "enemy.hpp"
 
 Enemy::Enemy(Graphics &graphics,
              const std::string &filePath,

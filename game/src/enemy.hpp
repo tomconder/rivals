@@ -1,7 +1,7 @@
 #ifndef INCLUDE_ENEMY_H
 #define INCLUDE_ENEMY_H
 
-#include "animatedsprite.h"
+#include "animatedsprite.hpp"
 
 class Enemy : public AnimatedSprite {
 public:

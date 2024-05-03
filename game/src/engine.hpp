@@ -1,9 +1,9 @@
 #ifndef INCLUDE_ENGINE_H
 #define INCLUDE_ENGINE_H
 
-#include "globals.h"
-#include "graphics.h"
-#include "input.h"
+#include "globals.hpp"
+#include "graphics.hpp"
+#include "input.hpp"
 
 class Engine {
 public:

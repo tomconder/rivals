@@ -1,4 +1,4 @@
-#include "dungeoncrawler.h"
+#include "dungeoncrawler.hpp"
 
 DungeonCrawler::DungeonCrawler() {
     appName = "Executive Rivals";

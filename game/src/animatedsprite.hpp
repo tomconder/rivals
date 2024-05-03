@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "sprite.h"
+#include "sprite.hpp"
 
 class AnimatedSprite : public Sprite {
 public:

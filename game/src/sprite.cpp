@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "sprite.h"
+#include "sprite.hpp"
 
 Sprite::Sprite(Graphics &graphics, int posx, int posy)
     : x(posx), y(posy) {

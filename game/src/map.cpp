@@ -1,4 +1,4 @@
-#include "map.h"
+#include "map.hpp"
 #include <iostream>
 
 Map::Map(Graphics &graphics, Level *level, int posx, int posy) :

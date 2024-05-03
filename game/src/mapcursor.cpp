@@ -1,4 +1,4 @@
-#include "mapcursor.h"
+#include "mapcursor.hpp"
 
 MapCursor::MapCursor(Graphics &graphics, const std::string &file, int srcx, int srcy, int w, int h, int posx, int posy)
     : Sprite(graphics, file, srcx, srcy, w, h, posx, posy), currentFrame("") {

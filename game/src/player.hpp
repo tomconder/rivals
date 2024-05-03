@@ -2,8 +2,8 @@
 #define INCLUDE_PLAYER_H
 
 #include <SDL.h>
-#include "globals.h"
-#include "level.h"
+#include "globals.hpp"
+#include "level.hpp"
 
 class Player {
 public:

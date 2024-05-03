@@ -1,11 +1,11 @@
 #ifndef INCLUDE_DUNGEONCRAWLER_H
 #define INCLUDE_DUNGEONCRAWLER_H
 
-#include "enemy.h"
-#include "engine.h"
-#include "map.h"
-#include "player.h"
-#include "sprite.h"
+#include "enemy.hpp"
+#include "engine.hpp"
+#include "map.hpp"
+#include "player.hpp"
+#include "sprite.hpp"
 
 class DungeonCrawler : public Engine {
 public:

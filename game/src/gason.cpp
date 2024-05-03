@@ -1,4 +1,4 @@
-#include "gason.h"
+#include "gason.hpp"
 #include <stdlib.h>
 
 #define JSON_ZONE_SIZE 4096

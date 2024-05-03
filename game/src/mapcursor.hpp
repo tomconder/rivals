@@ -1,8 +1,8 @@
 #ifndef INCLUDE_MAPCURSOR_H
 #define INCLUDE_MAPCURSOR_H
 
-#include "sprite.h"
-#include "globals.h"
+#include "sprite.hpp"
+#include "globals.hpp"
 
 class MapCursor : public Sprite {
 public:

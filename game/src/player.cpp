@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "player.h"
+#include "player.hpp"
 
 Player::Player(Level *level) : timeToUpdate(128) {
     x = level->getSpawnPlayerX();
