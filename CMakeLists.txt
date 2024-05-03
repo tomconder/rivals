@@ -1,49 +1,60 @@
-cmake_minimum_required(VERSION 3.17)
-project(rivals CXX C)
+cmake_minimum_required(VERSION 3.24)
 
-set(CMAKE_CXX_STANDARD 17)
+set(RIVALS_VERSION 1.0)
 
-file(GLOB SOURCE_FILES src/*.cpp)
-include_directories(src/include)
+# increment this when we break backwards compatibility
+set(RIVALS_SOVERSION 1)
 
-if (EMSCRIPTEN)
-  message("Building for emscripten")
+project(rivals
+        VERSION ${RIVALS_VERSION}
+        DESCRIPTION "A dungeon crawl with corporate ambitions"
+        HOMEPAGE_URL "https://gitub.com/tomconder/rivals"
+        LANGUAGES C CXX)
 
-  set(CMAKE_EXECUTABLE_SUFFIX ".html")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -s USE_SDL=2 -s USE_SDL_IMAGE=2")
+set(COPYRIGHT "Copyright 2024 Tom Conder")
 
-  add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+message(STATUS "Configuring ${PROJECT_NAME} ${PROJECT_VERSION}")
 
-  set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/html)
+if (NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD
+          23
+          CACHE STRING "")
+endif ()
 
-  set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-std=c++17 -O2 -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s \"SDL2_IMAGE_FORMATS=['png']\" --preload-file ${PROJECT_SOURCE_DIR}/build/assets@assets")
-else (EMSCRIPTEN)
-  set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-  find_package(SDL2 REQUIRED)
-  find_package(SDL2_IMAGE REQUIRED)
+if (CMAKE_CXX_STANDARD LESS 23)
+  message(
+          WARNING
+          "Incompatible C++ standard ${CMAKE_CXX_STANDARD}. This project requires C++23"
+  )
+endif ()
 
-  # for debugging
-  # include(CMakePrintHelpers)
-  # cmake_print_variables(SDL2_INCLUDE_DIR)
-  # cmake_print_variables(SDL2_LIBRARY)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -std=c++17")
+# Set a default build type if none was specified See
+# https://blog.kitware.com/cmake-and-the-default-build-type/ for details.
+set(default_build_type "Release")
 
-  add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  set(default_build_type "Debug")
+endif ()
 
-  target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_INCLUDE_DIR})
-  target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_IMAGE_INCLUDE_DIR})
+if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(
+          STATUS
+          "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE
+          "${default_build_type}"
+          CACHE STRING "Choose the type of build." FORCE)
 
-  target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
-  target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIBRARY})
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release")
+endif ()
 
-  set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build)
-  set(MAKE_DIRECTORY ${EXECUTABLE_OUTPUT_PATH})
-endif (EMSCRIPTEN)
+# Generate compile_commands.json to help work with clang based tools
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG} -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE} -O2")
+# Enhance error reporting and compiler messages
+set(CMAKE_COLOR_DIAGNOSTICS ON)
 
-# copy assets
-file(GLOB ASSETS assets/*)
-file(COPY ${ASSETS} DESTINATION ${PROJECT_SOURCE_DIR}/build/assets)
+add_subdirectory(game)

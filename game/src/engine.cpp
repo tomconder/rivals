@@ -2,7 +2,6 @@
 #include <emscripten/emscripten.h>
 #endif
 #include <SDL.h>
-#include <SDL_image.h>
 #include <iostream>
 
 #include "engine.h"
@@ -29,11 +28,6 @@ globals::retcode Engine::construct(int w, int h) {
 globals::retcode Engine::start() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) < 0) {
         std::cout << "Unable to initialize SDL: " << SDL_GetError() << std::endl;
-        return globals::FAIL;
-    }
-
-    if (IMG_Init(IMG_INIT_PNG) == 0) {
-        std::cout << "Unable to initialize SDL image: " << SDL_GetError() << std::endl;
         return globals::FAIL;
     }
 
