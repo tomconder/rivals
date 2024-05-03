@@ -1,49 +1,119 @@
 cmake_minimum_required(VERSION 3.17)
-project(rivals CXX C)
+project(rivals
+        VERSION 1.0
+        DESCRIPTION "A dungeon crawl with corporate ambitions"
+        HOMEPAGE_URL "https://gitub.com/tomconder/rivals"
+        LANGUAGES C CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(COPYRIGHT "Copyright 2024 Tom Conder")
 
-file(GLOB SOURCE_FILES src/*.cpp)
-include_directories(src/include)
+if (NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD
+          23
+          CACHE STRING "")
+endif ()
 
-if (EMSCRIPTEN)
-  message("Building for emscripten")
+if (CMAKE_CXX_STANDARD LESS 23)
+  message(
+          WARNING
+          "Incompatible C++ standard ${CMAKE_CXX_STANDARD}. This project requires C++23"
+  )
+endif ()
 
-  set(CMAKE_EXECUTABLE_SUFFIX ".html")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -s USE_SDL=2 -s USE_SDL_IMAGE=2")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-  add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+# Set a default build type if none was specified See
+# https://blog.kitware.com/cmake-and-the-default-build-type/ for details.
+set(default_build_type "Release")
 
-  set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/html)
+if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  set(default_build_type "Debug")
+endif ()
 
-  set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-std=c++17 -O2 -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s \"SDL2_IMAGE_FORMATS=['png']\" --preload-file ${PROJECT_SOURCE_DIR}/build/assets@assets")
-else (EMSCRIPTEN)
-  set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-  find_package(SDL2 REQUIRED)
-  find_package(SDL2_IMAGE REQUIRED)
+if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(
+          STATUS
+          "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE
+          "${default_build_type}"
+          CACHE STRING "Choose the type of build." FORCE)
 
-  # for debugging
-  # include(CMakePrintHelpers)
-  # cmake_print_variables(SDL2_INCLUDE_DIR)
-  # cmake_print_variables(SDL2_LIBRARY)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release")
+endif ()
 
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -std=c++17")
+# Generate compile_commands.json to help work with clang based tools
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-  add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+# Enhance error reporting and compiler messages
+set(CMAKE_COLOR_DIAGNOSTICS ON)
 
-  target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_INCLUDE_DIR})
-  target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_IMAGE_INCLUDE_DIR})
+file(
+        GLOB HEADER_FILES
+        LIST_DIRECTORIES false
+        src/include/*.h)
 
-  target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
-  target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIBRARY})
+file(
+        GLOB SOURCE_FILES
+        LIST_DIRECTORIES false
+        src/*.cpp)
 
-  set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build)
-  set(MAKE_DIRECTORY ${EXECUTABLE_OUTPUT_PATH})
-endif (EMSCRIPTEN)
+file(
+        GLOB ASSETS
+        LIST_DIRECTORIES false
+        assets/*)
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG} -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE} -O2")
+find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2_IMAGE CONFIG REQUIRED)
 
-# copy assets
-file(GLOB ASSETS assets/*)
-file(COPY ${ASSETS} DESTINATION ${PROJECT_SOURCE_DIR}/build/assets)
+add_executable(rivals ${SOURCE_FILES} ${HEADER_FILES})
+
+set_target_properties(rivals PROPERTIES CXX_STANDARD 23)
+
+if (MSVC)
+  # incremental builds
+  target_compile_options(rivals PUBLIC $<$<NOT:$<CONFIG:RELEASE>>:/Zi>)
+  target_link_options(rivals PUBLIC $<IF:$<CONFIG:RELEASE>,/INCREMENTAL:NO,/INCREMENTAL>)
+
+  # hardening
+  message(STATUS "Applying Windows hardening support")
+  target_compile_options(rivals PUBLIC $<$<NOT:$<CONFIG:DEBUG>>:/DYNAMICBASE /guard:cf>)
+  target_link_options(rivals PUBLIC "/NXCOMPAT /CETCOMPAT")
+endif ()
+
+target_include_directories(rivals PUBLIC src/include)
+
+target_link_libraries(rivals PRIVATE $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main> $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>)
+target_link_libraries(rivals PRIVATE $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>)
+
+if (APPLE)
+  add_custom_command(
+          TARGET rivals
+          POST_BUILD
+          COMMAND ${CMAKE_COMMAND} -E copy_directory
+          ${CMAKE_CURRENT_SOURCE_DIR}/assets $<TARGET_BUNDLE_CONTENT_DIR:rivals>/Resources
+          COMMENT "Copying assets to bundle content folder"
+          VERBATIM DEPENDS ${ASSETS})
+
+  set(APPS "$<TARGET_BUNDLE_DIR:rivals>")
+
+  install(CODE "
+        set(BU_CHMOD_BUNDLE_ITEMS ON)
+        include(BundleUtilities)
+        fixup_bundle(\"${APPS}\" \"${LIBS}\" \"${DIRS}\"\)"
+          COMPONENT Runtime
+  )
+else ()
+  add_custom_command(
+          TARGET rivals
+          POST_BUILD
+          COMMAND ${CMAKE_COMMAND} -E copy_directory
+          ${CMAKE_CURRENT_SOURCE_DIR}/assets $<TARGET_FILE_DIR:rivals>/assets
+          COMMENT "Copying assets to target folder"
+          VERBATIM DEPENDS ${ASSETS})
+
+  install(TARGETS rivals RUNTIME DESTINATION .)
+  install(FILES $<TARGET_RUNTIME_DLLS:rivals> DESTINATION .)
+  install(DIRECTORY assets DESTINATION .)
+endif ()

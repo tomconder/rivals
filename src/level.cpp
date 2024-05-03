@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
-#include <strings.h>
 
 Level::Level(const std::string &file) {
     initialize();
