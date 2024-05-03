@@ -1,9 +1,32 @@
 cmake_minimum_required(VERSION 3.17)
+
 project(rivals
         VERSION 1.0
         DESCRIPTION "A dungeon crawl with corporate ambitions"
         HOMEPAGE_URL "https://gitub.com/tomconder/rivals"
         LANGUAGES C CXX)
+
+if (WIN32)
+  # accommodate missing version number values
+  string(APPEND VERSION ${PROJECT_VERSION_MAJOR})
+  if (PROJECT_VERSION_MINOR)
+    string(APPEND VERSION ",${PROJECT_VERSION_MINOR}")
+  else ()
+    string(APPEND VERSION ",0")
+  endif ()
+  if (PROJECT_VERSION_PATCH)
+    string(APPEND VERSION ",${PROJECT_VERSION_PATCH}")
+  else ()
+    string(APPEND VERSION ",0")
+  endif ()
+  if (PROJECT_VERSION_TWEAK)
+    string(APPEND VERSION ",${PROJECT_VERSION_TWEAK}")
+  else ()
+    string(APPEND VERSION ",0")
+  endif ()
+
+  configure_file(bundle/resources/rivals.rc.in rivals.rc)
+endif ()
 
 set(COPYRIGHT "Copyright 2024 Tom Conder")
 
@@ -49,6 +72,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Enhance error reporting and compiler messages
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
+include(GNUInstallDirs)
+
 file(
         GLOB HEADER_FILES
         LIST_DIRECTORIES false
@@ -68,7 +93,9 @@ find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_IMAGE CONFIG REQUIRED)
 
 if (WIN32)
-  add_executable(rivals WIN32 ${SOURCE_FILES} ${HEADER_FILES})
+  set_source_files_properties(maze.rc PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
+  add_executable(rivals WIN32 ${SOURCE_FILES} ${HEADER_FILES} rivals.rc)
+  target_include_directories(rivals PRIVATE bundle/icons)
 elseif (APPLE)
   add_executable(rivals MACOSX_BUNDLE ${SOURCE_FILES} ${HEADER_FILES})
 else ()
