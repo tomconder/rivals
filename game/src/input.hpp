@@ -5,19 +5,19 @@
 #include <map>
 
 class Input {
-public:
+   public:
     void beginFrame();
-    void keyDown(const SDL_Event &event);
-    void keyUp(const SDL_Event &event);
+    void keyDown(const SDL_Event& event);
+    void keyUp(const SDL_Event& event);
 
     bool isKeyHeld(SDL_Scancode key);
     bool wasKeyPressed(SDL_Scancode key);
     bool wasKeyReleased(SDL_Scancode key);
 
-private:
+   private:
     std::map<SDL_Scancode, bool> heldKeys;
     std::map<SDL_Scancode, bool> pressedKeys;
     std::map<SDL_Scancode, bool> releasedKeys;
 };
 
-#endif //INCLUDE_INPUT_H
+#endif  // INCLUDE_INPUT_H

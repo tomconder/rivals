@@ -1,10 +1,6 @@
-#ifdef EMSCRIPTEN
-#include <emscripten/emscripten.h>
-#endif
+#include "engine.hpp"
 #include <SDL.h>
 #include <iostream>
-
-#include "engine.h"
 
 Engine::Engine() {
     appName = "undefined";
@@ -27,7 +23,8 @@ globals::retcode Engine::construct(int w, int h) {
 
 globals::retcode Engine::start() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) < 0) {
-        std::cout << "Unable to initialize SDL: " << SDL_GetError() << std::endl;
+        std::cout << "Unable to initialize SDL: " << SDL_GetError()
+                  << std::endl;
         return globals::FAIL;
     }
 
@@ -81,9 +78,6 @@ bool Engine::iterateLoop() {
 
     if (quit) {
         if (onUserDestroy()) {
-#ifdef EMSCRIPTEN
-            emscripten_cancel_main_loop();
-#endif
             graphics.cleanup();
             SDL_Quit();
 

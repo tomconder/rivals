@@ -1,9 +1,9 @@
-#include "level.h"
+#include "level.hpp"
 #include <fstream>
 #include <iostream>
 #include <iterator>
 
-Level::Level(const std::string &file) {
+Level::Level(const std::string& file) {
     initialize();
     readLevelFromFile(file);
 }
@@ -39,18 +39,17 @@ void Level::initialize() {
     directions[3] = direction::Direction::LEFT;
 }
 
-void Level::readDirectionFromProperties(JsonValue &properties) {
+void Level::readDirectionFromProperties(JsonValue& properties) {
     int index;
     bool isDirection = false;
 
     auto val = properties;
     if (val.getTag() == JSON_ARRAY) {
         auto o = begin(val);
-        for (auto item : o->value)
-        {
+        for (auto item : o->value) {
             if (strcmp(item->key, "value") == 0) {
                 if (item->value.getTag() == JSON_NUMBER) {
-                     index = (int)(item->value).toNumber();
+                    index = (int)(item->value).toNumber();
                 }
             } else if (strcmp(item->key, "name") == 0) {
                 if (item->value.getTag() == JSON_STRING) {
@@ -69,18 +68,20 @@ void Level::readDirectionFromProperties(JsonValue &properties) {
     }
 }
 
-void Level::readLevelFromFile(const std::string &file) {
+void Level::readLevelFromFile(const std::string& file) {
     std::ifstream mapFile(file, std::ios::binary);
     std::vector<char> contents;
-    std::copy(std::istream_iterator<char>(mapFile), std::istream_iterator<char>(), std::back_inserter(contents));
+    std::copy(std::istream_iterator<char>(mapFile),
+              std::istream_iterator<char>(), std::back_inserter(contents));
 
-    char *endptr;
+    char* endptr;
     JsonValue value;
     JsonAllocator allocator;
     int status = jsonParse(contents.data(), &endptr, &value, allocator);
     if (status != JSON_OK) {
-        std::cout << "Error reading level - " << file << ": " << jsonStrError(status) << " at "
-                  << endptr - contents.data() << std::endl;
+        std::cout << "Error reading level - " << file << ": "
+                  << jsonStrError(status) << " at " << endptr - contents.data()
+                  << std::endl;
         return;
     }
 
@@ -107,11 +108,11 @@ void Level::readLevelFromFile(const std::string &file) {
         }
     }
 
-    spawnPlayerX = (int) x / tilewidth;
-    spawnPlayerY = (int) y / tileheight;
+    spawnPlayerX = (int)x / tilewidth;
+    spawnPlayerY = (int)y / tileheight;
 }
 
-void Level::readLevelFromLayers(JsonValue &layers, int *x, int *y) {
+void Level::readLevelFromLayers(JsonValue& layers, int* x, int* y) {
     bool isPlayerLayer;
     bool isTileLayer;
     int temph = 0;
@@ -145,8 +146,7 @@ void Level::readLevelFromLayers(JsonValue &layers, int *x, int *y) {
                 auto val = i->value;
                 if (val.getTag() == JSON_ARRAY) {
                     auto o = begin(val);
-                    for (auto item : o->value)
-                    {
+                    for (auto item : o->value) {
                         if (strcmp(item->key, "x") == 0) {
                             if (item->value.getTag() == JSON_NUMBER) {
                                 tempx = (int)(item->value).toNumber();

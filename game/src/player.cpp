@@ -1,7 +1,7 @@
+#include "player.hpp"
 #include <algorithm>
-#include "player.h"
 
-Player::Player(Level *level) : timeToUpdate(128) {
+Player::Player(Level* level) : timeToUpdate(128) {
     x = level->getSpawnPlayerX();
     y = level->getSpawnPlayerY();
     direction = level->getSpawnPlayerDirection();
@@ -12,7 +12,7 @@ void Player::setNextMove(move::Move move) {
     nextMove = move;
 }
 
-bool Player::checkDestination(int destx, int desty, Level *level) {
+bool Player::checkDestination(int destx, int desty, Level* level) {
     if (destx != std::clamp(destx, 0, level->getWidth() - 1)) {
         return false;
     }
@@ -25,7 +25,7 @@ bool Player::checkDestination(int destx, int desty, Level *level) {
     return values[destx + desty * level->getWidth()] != 1;
 }
 
-void Player::moveBackward(Level *level) {
+void Player::moveBackward(Level* level) {
     if (direction == direction::Direction::RIGHT) {
         if (checkDestination(x - 1, y, level)) {
             x--;
@@ -48,7 +48,7 @@ void Player::moveBackward(Level *level) {
     }
 }
 
-void Player::moveForward(Level *level) {
+void Player::moveForward(Level* level) {
     if (direction == direction::Direction::RIGHT) {
         if (checkDestination(x + 1, y, level)) {
             x++;
@@ -71,7 +71,7 @@ void Player::moveForward(Level *level) {
     }
 }
 
-void Player::moveLeft(Level *level) {
+void Player::moveLeft(Level* level) {
     if (direction == direction::Direction::RIGHT) {
         if (checkDestination(x, y - 1, level)) {
             y--;
@@ -94,7 +94,7 @@ void Player::moveLeft(Level *level) {
     }
 }
 
-void Player::moveRight(Level *level) {
+void Player::moveRight(Level* level) {
     if (direction == direction::Direction::RIGHT) {
         if (checkDestination(x, y + 1, level)) {
             y++;
@@ -145,7 +145,7 @@ void Player::stopMoving() {
     nextMove = move::Move::NONE;
 }
 
-void Player::update(Uint32 elapsedTime, Level *level) {
+void Player::update(Uint32 elapsedTime, Level* level) {
     timeElapsed += elapsedTime;
     if (timeElapsed >= timeToUpdate) {
         timeElapsed = (timeElapsed - timeToUpdate) % timeToUpdate;
@@ -169,7 +169,8 @@ void Player::update(Uint32 elapsedTime, Level *level) {
             case move::Move::ROTATE_RIGHT:
                 rotateRight();
                 break;
-            default:break;
+            default:
+                break;
         }
 
         nextMove = move::Move::NONE;

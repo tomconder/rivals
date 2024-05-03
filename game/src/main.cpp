@@ -1,33 +1,21 @@
-#ifdef EMSCRIPTEN
-#include <emscripten/emscripten.h>
-#endif
+#include "dungeoncrawler.hpp"
+#include "globals.hpp"
 #include <SDL.h>
 
-#include "globals.h"
-#include "dungeoncrawler.h"
+DungeonCrawler* dungeonCrawler;
 
-DungeonCrawler *dungeonCrawler;
-
-// loop iteration is broken out like this for emscripten
-bool iterateLoop() {
-    return dungeonCrawler->iterateLoop();
-}
-
-int main(int argc, char *args[]) {
+int main(int argc, char* args[]) {
     dungeonCrawler = new DungeonCrawler();
 
-    if (dungeonCrawler->construct(globals::SCREEN_WIDTH, globals::SCREEN_HEIGHT)) {
+    if (dungeonCrawler->construct(globals::SCREEN_WIDTH,
+                                  globals::SCREEN_HEIGHT)) {
         dungeonCrawler->start();
     }
 
-#ifdef EMSCRIPTEN
-    emscripten_set_main_loop((em_callback_func) iterateLoop, 60, true);
-#else
     bool quit = false;
     while (!quit) {
-        quit = iterateLoop();
+        quit = dungeonCrawler->iterateLoop();
     }
-#endif
 
     return 0;
 }

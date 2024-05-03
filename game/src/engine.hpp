@@ -1,12 +1,12 @@
 #ifndef INCLUDE_ENGINE_H
 #define INCLUDE_ENGINE_H
 
-#include "globals.h"
-#include "graphics.h"
-#include "input.h"
+#include "globals.hpp"
+#include "graphics.hpp"
+#include "input.hpp"
 
 class Engine {
-public:
+   public:
     Engine();
 
     globals::retcode construct(int w, int h);
@@ -20,14 +20,14 @@ public:
 
     std::string appName;
 
-protected:
+   protected:
     Graphics graphics;
     Input input;
     int screenHeight;
     int screenWidth;
 
-private:
+   private:
     Uint32 lastUpdateTime;
 };
 
-#endif //INCLUDE_ENGINE_H
+#endif  // INCLUDE_ENGINE_H

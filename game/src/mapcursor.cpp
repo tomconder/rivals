@@ -1,6 +1,7 @@
-#include "mapcursor.h"
+#include "mapcursor.hpp"
 
-MapCursor::MapCursor(Graphics &graphics, const std::string &file, int srcx, int srcy, int w, int h, int posx, int posy)
+MapCursor::MapCursor(Graphics& graphics, const std::string& file, int srcx,
+                     int srcy, int w, int h, int posx, int posy)
     : Sprite(graphics, file, srcx, srcy, w, h, posx, posy), currentFrame("") {
     // nothing
 }
@@ -25,19 +26,19 @@ void MapCursor::setDirection(direction::Direction direction) {
     }
 }
 
-void MapCursor::draw(Graphics &graphics) {
+void MapCursor::draw(Graphics& graphics) {
     if (frames.count(currentFrame) > 0) {
         srcrect = frames[currentFrame];
-        SDL_Rect dstrect = {x + 10, y + 10, 20, 20};
+        SDL_Rect dstrect = { x + 10, y + 10, 20, 20 };
         graphics.blitSurface(image, &srcrect, &dstrect);
     }
 }
 
 void MapCursor::setupFrames() {
-    frames.insert(std::pair<std::string, SDL_Rect>("Right", {0, 0, 10, 10}));
-    frames.insert(std::pair<std::string, SDL_Rect>("Up", {10, 0, 10, 10}));
-    frames.insert(std::pair<std::string, SDL_Rect>("Left", {20, 0, 10, 10}));
-    frames.insert(std::pair<std::string, SDL_Rect>("Down", {30, 0, 10, 10}));
+    frames.insert(std::pair<std::string, SDL_Rect>("Right", { 0, 0, 10, 10 }));
+    frames.insert(std::pair<std::string, SDL_Rect>("Up", { 10, 0, 10, 10 }));
+    frames.insert(std::pair<std::string, SDL_Rect>("Left", { 20, 0, 10, 10 }));
+    frames.insert(std::pair<std::string, SDL_Rect>("Down", { 30, 0, 10, 10 }));
 
     currentFrame = "Up";
 }
