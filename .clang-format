@@ -10,10 +10,8 @@ QualifierAlignment: Left
 IncludeBlocks: Merge
 IncludeCategories:
   # Matches common headers first, but sorts them after project includes
-  - Regex: '^\"sponge/'     # project includes should sort first
-    Priority: -1
   - Regex: '^\"game/' # project internals second
-    Priority: 1000
+    Priority: -1
   - Regex: '^\"'         # And then includes from other projects or the system
     Priority: 1500
   - Regex: '^<.*/.*'
