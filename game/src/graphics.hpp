@@ -1,5 +1,4 @@
-#ifndef INCLUDE_GRAPHICS_H
-#define INCLUDE_GRAPHICS_H
+#pragma once
 
 #include <SDL.h>
 #include <map>
@@ -25,5 +24,3 @@ class Graphics {
 
     std::map<std::string, SDL_Surface*> images;
 };
-
-#endif  // INCLUDE_GRAPHICS_H

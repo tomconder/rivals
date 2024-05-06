@@ -1,5 +1,4 @@
-#ifndef INCLUDE_INPUT_H
-#define INCLUDE_INPUT_H
+#pragma once
 
 #include <SDL.h>
 #include <map>
@@ -19,5 +18,3 @@ class Input {
     std::map<SDL_Scancode, bool> pressedKeys;
     std::map<SDL_Scancode, bool> releasedKeys;
 };
-
-#endif  // INCLUDE_INPUT_H

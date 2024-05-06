@@ -1,5 +1,4 @@
-#ifndef INCLUDE_PLAYER_H
-#define INCLUDE_PLAYER_H
+#pragma once
 
 #include "globals.hpp"
 #include "level.hpp"
@@ -34,5 +33,3 @@ class Player {
 
     bool checkDestination(int destx, int desty, Level* level);
 };
-
-#endif  // INCLUDE_PLAYER_H

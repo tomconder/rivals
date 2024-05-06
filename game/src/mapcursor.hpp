@@ -1,5 +1,4 @@
-#ifndef INCLUDE_MAPCURSOR_H
-#define INCLUDE_MAPCURSOR_H
+#pragma once
 
 #include "globals.hpp"
 #include "sprite.hpp"
@@ -19,5 +18,3 @@ class MapCursor : public Sprite {
     std::string currentFrame;
     std::map<std::string, SDL_Rect> frames;
 };
-
-#endif  // INCLUDE_MAPCURSOR_H

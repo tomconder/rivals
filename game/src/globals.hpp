@@ -1,5 +1,4 @@
-#ifndef INCLUDE_GLOBALS_H
-#define INCLUDE_GLOBALS_H
+#pragma once
 
 namespace globals {
 const int SCREEN_WIDTH = 640;
@@ -15,5 +14,3 @@ enum Direction { LEFT, RIGHT, UP, DOWN };
 namespace move {
 enum Move { LEFT, RIGHT, FORWARD, BACK, ROTATE_LEFT, ROTATE_RIGHT, NONE };
 }
-
-#endif  // INCLUDE_GLOBALS_H

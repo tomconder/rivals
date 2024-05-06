@@ -1,5 +1,4 @@
-#ifndef INCLUDE_SPRITE_H
-#define INCLUDE_SPRITE_H
+#pragma once
 
 #include "graphics.hpp"
 #include <SDL.h>
@@ -21,5 +20,3 @@ class Sprite {
 
     int x, y;
 };
-
-#endif  // INCLUDE_SPRITE_H
