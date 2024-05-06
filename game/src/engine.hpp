@@ -1,5 +1,4 @@
-#ifndef INCLUDE_ENGINE_H
-#define INCLUDE_ENGINE_H
+#pragma once
 
 #include "globals.hpp"
 #include "graphics.hpp"
@@ -29,5 +28,3 @@ class Engine {
    private:
     Uint32 lastUpdateTime;
 };
-
-#endif  // INCLUDE_ENGINE_H

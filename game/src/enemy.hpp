@@ -1,5 +1,4 @@
-#ifndef INCLUDE_ENEMY_H
-#define INCLUDE_ENEMY_H
+#pragma once
 
 #include "animatedsprite.hpp"
 
@@ -30,5 +29,3 @@ class Goblin : public Enemy {
 
     void setupAnimations() override;
 };
-
-#endif  // INCLUDE_ENEMY_H

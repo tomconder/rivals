@@ -1,5 +1,4 @@
-#ifndef INCLUDE_MAP_H
-#define INCLUDE_MAP_H
+#pragma once
 
 #include "globals.hpp"
 #include "level.hpp"
@@ -36,5 +35,3 @@ class Map : public Sprite {
 
     MapCursor* arrow;
 };
-
-#endif  // INCLUDE_MAP_H

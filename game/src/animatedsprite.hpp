@@ -1,5 +1,4 @@
-#ifndef INCLUDE_ANIMATEDSPRITE_H
-#define INCLUDE_ANIMATEDSPRITE_H
+#pragma once
 
 #include "sprite.hpp"
 #include <map>
@@ -37,5 +36,3 @@ class AnimatedSprite : public Sprite {
     Uint32 timeElapsed;
     bool visible;
 };
-
-#endif  // INCLUDE_ANIMATEDSPRITE_H

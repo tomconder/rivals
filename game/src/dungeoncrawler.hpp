@@ -1,5 +1,4 @@
-#ifndef INCLUDE_DUNGEONCRAWLER_H
-#define INCLUDE_DUNGEONCRAWLER_H
+#pragma once
 
 #include "enemy.hpp"
 #include "engine.hpp"
@@ -22,5 +21,3 @@ class DungeonCrawler : public Engine {
     Sprite* logo;
     Warrior* warrior;
 };
-
-#endif  // INCLUDE_DUNGEONCRAWLER_H

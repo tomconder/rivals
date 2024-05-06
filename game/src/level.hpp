@@ -1,5 +1,4 @@
-#ifndef INCLUDE_LEVEL_H
-#define INCLUDE_LEVEL_H
+#pragma once
 
 #include "gason.hpp"
 #include "globals.hpp"
@@ -32,5 +31,3 @@ class Level {
     void readLevelFromFile(const std::string& file);
     void readLevelFromLayers(JsonValue& layers, int* x, int* y);
 };
-
-#endif  // INCLUDE_LEVEL_H
