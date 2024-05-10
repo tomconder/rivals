@@ -5,8 +5,8 @@ have icons.
 ![screenshot.png](docs/screenshot.png)
 
 ## Platforms
-* Mac OSX
 * Windows
+* Mac OSX
 * Linux
 
 ## Building
